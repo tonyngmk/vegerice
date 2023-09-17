@@ -1,4 +1,4 @@
-import NextAuth from "next-auth";
+import NextAuth, {NextAuthOptions} from "next-auth";
 import GithubProvider from "next-auth/providers/github"
 
 // import { authOptions } from "~/server/auth";
@@ -6,7 +6,10 @@ import GithubProvider from "next-auth/providers/github"
 const githubClientId: string = process.env.GITHUB_ID ?? "";
 const githubClientSecret: string = process.env.GITHUB_CLIENT_SECRET ?? "";
 
-export const authOptions = {
+export const authOptions : NextAuthOptions = {
+    session : {
+        strategy : 'jwt'
+    },
     // Configure one or more authentication providers
     providers: [
       GithubProvider({
