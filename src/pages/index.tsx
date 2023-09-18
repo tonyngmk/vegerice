@@ -5,9 +5,6 @@ import Link from "next/link";
 import { api } from "~/utils/api";
 
 export default function Home() {
-  // const hello = api.example.hello.useQuery({ text: "from tRPC" });
-
-  const { data : shop_data } = api.shops.getAll.useQuery();
 
   return (
     <>
@@ -44,9 +41,6 @@ export default function Home() {
             </Link>
           </div>
           <div className="flex flex-col items-center gap-2">
-            <p className="text-2xl text-white">
-              {shop_data?.map((shop => (<div key={shop.shop_id}>{shop.shop_name}</div>)))}
-            </p>
             <AuthShowcase />
           </div>
         </div>

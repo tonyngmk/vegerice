@@ -61,6 +61,8 @@ model Market {
     market_name   String
     market_email  String?   @unique
     market_image  String?
+    postal_code   Int?
+    market_address String?
     shops         Shop[]
 
     @@index([market_id])
@@ -73,6 +75,8 @@ model Shop {
     shop_name     String
     shop_email    String?   @unique
     shop_image    String?
+    shop_floor    Int?
+    shop_unit     Int?
     user          User    @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
     market        Market  @relation(fields: [market_id], references: [market_id], onDelete: Cascade)
     shop_items    ShopItem[]
@@ -86,6 +90,7 @@ model ShopItem {
     shop_id       String
     item_name     String
     item_image    String?
+    item_price    Float?
     shop          Shop    @relation(fields: [shop_id], references: [shop_id], onDelete: Cascade)
 
     @@unique([item_id])
