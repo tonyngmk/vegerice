@@ -57,29 +57,33 @@ model Session {
 
 model Market {
     // This can be i.e. a hawker centre / food court / e
-    market_id     String    @id @default(cuid())
-    market_name   String
-    market_email  String?   @unique
-    market_image  String?
-    postal_code   Int?
-    market_address String?
+    market_id            String    @id @default(cuid())
+    market_name          String
+    market_email         String?   @unique
+    market_image         String?
+    market_block_house   String?
+    market_street_name   String?
+    market_unit_no       Int?
+    market_postal_code   Int?
     shops         Shop[]
 
     @@index([market_id])
 }
 
 model Shop {
-    shop_id       String    @id @default(cuid())
-    user_id       String
-    market_id     String
-    shop_name     String
-    shop_email    String?   @unique
-    shop_image    String?
-    shop_floor    Int?
-    shop_unit     Int?
-    user          User    @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
-    market        Market  @relation(fields: [market_id], references: [market_id], onDelete: Cascade)
-    shop_items    ShopItem[]
+    shop_id            String    @id @default(cuid())
+    user_id            String
+    market_id          String?
+    shop_name          String
+    shop_email         String?   @unique
+    shop_image         String?
+    shop_block_house   String?
+    shop_street_name   String?
+    shop_unit_no       Int?
+    shop_postal_code   Int?
+    user               User    @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
+    market             Market?  @relation(fields: [market_id], references: [market_id], onDelete: Cascade)
+    shop_items         ShopItem[]
 
     @@unique([user_id, shop_id])
     @@index([shop_id])
