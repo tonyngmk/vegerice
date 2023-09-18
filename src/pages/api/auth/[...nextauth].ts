@@ -20,24 +20,18 @@ export const authOptions : NextAuthOptions = {
     session : {
         strategy : 'jwt'
     },
-    // Configure one or more authentication providers
+    jwt : {
+      secret : process.env.NEXTAUTH_SECRET ?? ""
+    },
     providers: [
       GithubProvider({
         clientId: githubClientId,
         clientSecret: githubClientSecret,
       }),
-      // FacebookProvider({
-      //   clientId: facebookClientId,
-      //   clientSecret: facebookClientSecret,
-      // }),
       DiscordProvider({
         clientId: discordClientId,
         clientSecret: discordClientSecret,
       }),
-      // AppleProvider({
-      //   clientId: appleClientId,
-      //   clientSecret: appleClientSecret,
-      // }),
     ],
   }
   
