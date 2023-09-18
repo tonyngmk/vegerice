@@ -1,4 +1,4 @@
-import { useSession , getSession, signIn, signOut } from 'next-auth/react';
+import { useSession , signIn, signOut } from 'next-auth/react';
 
 export default function Prices() {
 
@@ -12,6 +12,8 @@ export default function Prices() {
 
 function AuthenticationCheck() {
     const { data : session } = useSession();
+
+    // console.log(session);
 
     return (
         <button

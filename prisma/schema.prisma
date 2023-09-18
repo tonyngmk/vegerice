@@ -11,51 +11,87 @@ datasource db {
   relationMode = "prisma"
 }
 
-model Example {
-    id        Int      @id @default(autoincrement())
-    name      String
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+model User {
+    user_id       String    @id @default(cuid())
+    user_name     String
+    user_email    String   @unique
+    user_verified DateTime?
+    accounts      Account[]
+    shops         Shop[]
 
-    @@index([name])
+    @@unique([user_id])
+    @@index([user_id])
 }
 
-// Necessary for Next auth
 model Account {
-    id                String  @id @default(cuid())
-    userId            String
-    type              String
-    provider          String
-    providerAccountId String
-    refresh_token     String? // @db.Text
-    access_token      String? // @db.Text
-    expires_at        Int?
-    token_type        String?
-    scope             String?
-    id_token          String? // @db.Text
-    session_state     String?
-    user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+    account_id          String  @id @default(cuid())
+    user_id             String
+    type                String
+    account_provider    String
+    account_provider_id String
+    refresh_token       String? // @db.Text
+    access_token        String? // @db.Text
+    expires_at          Int?
+    token_type          String?
+    scope               String?
+    id_token            String? // @db.Text
+    session_state       String?
+    user                User    @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
+    sessions            Session[]
 
-    @@unique([provider, providerAccountId])
+    @@unique([user_id, account_id])
+    @@index([account_id])
 }
 
 model Session {
-    id           String   @id @default(cuid())
-    sessionToken String   @unique
-    userId       String
-    expires      DateTime
-    user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    session_id    String   @id @default(cuid())
+    sessionToken  String   @unique
+    user_id       String
+    account_id    String
+    expires       DateTime
+    account       Account  @relation(fields: [user_id, account_id], references: [user_id, account_id], onDelete: Cascade)
+    
+    @@unique([session_id])
+    @@index([session_id])
 }
 
-model User {
-    id            String    @id @default(cuid())
-    name          String?
-    email         String?   @unique
-    emailVerified DateTime?
-    image         String?
-    accounts      Account[]
-    sessions      Session[]
+model Market {
+    // This can be i.e. a hawker centre / food court / e
+    market_id     String    @id @default(cuid())
+    market_name   String
+    market_email  String?   @unique
+    market_image  String?
+    shops         Shop[]
+
+    @@index([market_id])
 }
+
+model Shop {
+    shop_id       String    @id @default(cuid())
+    user_id       String
+    market_id     String
+    shop_name     String
+    shop_email    String?   @unique
+    shop_image    String?
+    user          User    @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
+    market        Market  @relation(fields: [market_id], references: [market_id], onDelete: Cascade)
+    shop_items    ShopItem[]
+
+    @@unique([user_id, shop_id])
+    @@index([shop_id])
+}
+
+model ShopItem {
+    item_id       String    @id @default(cuid())
+    shop_id       String
+    item_name     String
+    item_image    String?
+    shop          Shop    @relation(fields: [shop_id], references: [shop_id], onDelete: Cascade)
+
+    @@unique([item_id])
+    @@index([item_id])
+}
+
 
 model VerificationToken {
     identifier String
