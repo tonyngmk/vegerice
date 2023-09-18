@@ -1,6 +1,4 @@
 import { useSession , getSession, signIn, signOut } from 'next-auth/react';
-import { GetServerSidePropsContext } from 'next';
-import { useRouter } from 'next/router';
 
 export default function Prices() {
 
@@ -24,13 +22,3 @@ function AuthenticationCheck() {
         </button>
     );
 }
-
-// export async function getServerSideProps(context : GetServerSidePropsContext) {
-//     const session = await getSession(context);
-//     return {
-//         props : {
-//             session,
-//             data : 'test' 
-//         },
-//     }
-// }
