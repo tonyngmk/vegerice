@@ -1,16 +1,16 @@
 import NextAuth, {NextAuthOptions} from "next-auth";
 import GithubProvider from "next-auth/providers/github";
-import FacebookProvider from "next-auth/providers/facebook";
 import DiscordProvider from "next-auth/providers/discord";
 
+// import FacebookProvider from "next-auth/providers/facebook"; // Some troubleshooting issues to be performed
 // import GoogleProvider from "next-auth/providers/google"; // Requires top-level domain (.com or smth)
 // import AppleProvider from "next-auth/providers/apple"; // Requires $99/month for Apple Developer account lol
 
 
 const githubClientId: string = process.env.GITHUB_CLIENT_ID ?? "";
 const githubClientSecret: string = process.env.GITHUB_CLIENT_SECRET ?? "";
-const facebookClientId: string = process.env.FACEBOOK_CLIENT_ID ?? "";
-const facebookClientSecret: string = process.env.FACEBOOK_CLIENT_SECRET ?? "";
+// const facebookClientId: string = process.env.FACEBOOK_CLIENT_ID ?? "";
+// const facebookClientSecret: string = process.env.FACEBOOK_CLIENT_SECRET ?? "";
 const discordClientId: string = process.env.DISCORD_CLIENT_ID ?? "";
 const discordClientSecret: string = process.env.DISCORD_CLIENT_SECRET ?? ""; 
 // const appleClientId: string = process.env.APPLE_CLIENT_ID ?? "";
@@ -26,10 +26,10 @@ export const authOptions : NextAuthOptions = {
         clientId: githubClientId,
         clientSecret: githubClientSecret,
       }),
-      FacebookProvider({
-        clientId: facebookClientId,
-        clientSecret: facebookClientSecret,
-      }),
+      // FacebookProvider({
+      //   clientId: facebookClientId,
+      //   clientSecret: facebookClientSecret,
+      // }),
       DiscordProvider({
         clientId: discordClientId,
         clientSecret: discordClientSecret,
