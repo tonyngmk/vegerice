@@ -13,13 +13,13 @@ export default function Navbar() {
 
                 <ul className="flex space-x-6">
                 <li>
-                    <Link href="/jobs" className="text-white">
-                    Jobs
+                    <Link href="/shops" className="text-white">
+                    Shops
                     </Link>
                 </li>
                 <li>
-                    <Link href="/salaries" className="text-white">
-                    Salaries
+                    <Link href="/prices" className="text-white">
+                    Prices
                     </Link>
                 </li>
                 {/* Add more navigation links as needed */}
