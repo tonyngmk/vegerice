@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+html {
+    background-color: #111827; /* Fallback for non-Tailwind environments */
+}
+
+div {
+    color: white;
+}

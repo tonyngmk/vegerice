@@ -4,8 +4,10 @@ export default function Prices() {
 
     return (
         <>
-            <h1>Prices page</h1>
+        <div className="flex flex-col justify-top items-center min-h-screen">
+            <div className="py-16 text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">Prices</div>
             <AuthenticationCheck />
+        </div>
         </>
     )
 };
@@ -13,11 +15,10 @@ export default function Prices() {
 function AuthenticationCheck() {
     const { data : session } = useSession();
 
-    // console.log(session);
 
     return (
         <button
-            className="rounded-full bg-black/10 px-10 py-3 font-semibold text-black no-underline transition hover:bg-white/20"
+            className="rounded-full bg-white/10 px-10 py-3 font-semibold text-white no-underline transition hover:bg-white/20"
             onClick={session ? () => void signOut() : () => void signIn()}
         >
         {session ? "Sign out" : "Sign in"}

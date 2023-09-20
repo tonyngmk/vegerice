@@ -11,7 +11,9 @@ datasource db {
   relationMode = "prisma"
 }
 
+// Next-Auth required models
 model User {
+    // Fundamentally, 1 person maps to 1 user.
     user_id       String    @id @default(cuid())
     user_name     String
     user_email    String   @unique
@@ -24,6 +26,7 @@ model User {
 }
 
 model Account {
+    // 1 User can however have many accounts, i.e. via multiple platforms like Google, Facebook, etc.
     account_id          String  @id @default(cuid())
     user_id             String
     type                String
@@ -44,6 +47,7 @@ model Account {
 }
 
 model Session {
+    // An account can have multiple sessions, i.e. A user's Google account has 2 sessions, and Facebook account has 1 session today.
     session_id    String   @id @default(cuid())
     sessionToken  String   @unique
     user_id       String
@@ -55,8 +59,17 @@ model Session {
     @@index([session_id])
 }
 
+model VerificationToken {
+    identifier String
+    token      String   @unique
+    expires    DateTime
+
+    @@unique([identifier, token])
+}
+
+// Database design for Vegerice
 model Market {
-    // This can be i.e. a hawker centre / food court / e
+    // A market is synonymous with a place where people eat, i.e. a hawker centre / food court / eatery / food street, etc.
     market_id            String    @id @default(cuid())
     market_name          String
     market_email         String?   @unique
@@ -65,12 +78,15 @@ model Market {
     market_street_name   String?
     market_unit_no       Int?
     market_postal_code   Int?
+    market_coordinates     String?
     shops         Shop[]
 
     @@index([market_id])
 }
 
 model Shop {
+    // A market can have 1 or multiple shops, i.e. 1 selling rice, another selling noodles, etc.
+    // For rare standalone food shops, a 'Market' can be optional too.
     shop_id            String    @id @default(cuid())
     user_id            String
     market_id          String?
@@ -81,6 +97,11 @@ model Shop {
     shop_street_name   String?
     shop_unit_no       Int?
     shop_postal_code   Int?
+    shop_description   String?
+    shop_category_l1   String
+    shop_category_l2   String?
+    shop_coordinates     String?
+    is_halal           Boolean?
     user               User    @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
     market             Market?  @relation(fields: [market_id], references: [market_id], onDelete: Cascade)
     shop_items         ShopItem[]
@@ -90,22 +111,17 @@ model Shop {
 }
 
 model ShopItem {
-    item_id       String    @id @default(cuid())
-    shop_id       String
-    item_name     String
-    item_image    String?
-    item_price    Float?
-    shop          Shop    @relation(fields: [shop_id], references: [shop_id], onDelete: Cascade)
+    // A shop can sell many items, and some items can be best sellers supporting the reputation of a store, while exist other poorer performing ones.
+    item_id          String    @id @default(cuid())
+    shop_id          String
+    item_name        String
+    item_category_l1 String
+    item_category_l2 String?
+    item_description String?
+    item_image       String?
+    item_price       Float?
+    shop             Shop    @relation(fields: [shop_id], references: [shop_id], onDelete: Cascade)
 
     @@unique([item_id])
     @@index([item_id])
-}
-
-
-model VerificationToken {
-    identifier String
-    token      String   @unique
-    expires    DateTime
-
-    @@unique([identifier, token])
 }
