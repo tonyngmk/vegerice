@@ -2,7 +2,9 @@
 
 For eaters by eaters, to hunt for the best food deals (community-driven).
 
-## Why is this required? Don't we have Kiasu Foodies TG group, food reviews by bloggers, or even Google Maps, etc.?
+## Why?
+
+| Don't we have Kiasu Foodies TG group, food reviews by bloggers, or even Google Maps, etc.?
 
 Since the advent of e-commerce, comparing products has been easy through community-sourced 5-point review systems.
 
