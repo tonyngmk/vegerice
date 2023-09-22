@@ -6,7 +6,9 @@ For eaters by eaters, to hunt for the best food deals (community-driven).
 
 | Don't we have Kiasu Foodies TG group, food reviews by bloggers, or even Google Maps, etc.?
 
-Since the advent of e-commerce, comparing products has been easy through community-sourced 5-point review systems.
+Since the advent of e-commerce, we've seen how community-sourced reviews can be so useful.
+
+Personally, my buying decision is not driven as much by the description written by each writers (probably yes to see all features it can potentially do) but more by the reviews and ratings each existing buyer has given. With it, we can more objectively see the value (or lack thereof) of each product with the law of large numbers along with photos / videos NOT purely for illustrated purposes only.
 
 However, what about brick and mortar food stalls? It is clear that not all eating establishments are hopping onto the food delivery hype-train any time soon, and hence comparing for the "Best Caifan in the East" is only a shouting match between the minority few younger and slightly tech-savvy owners who makes traditional Facebook pages to promote their stalls.
 
@@ -20,7 +22,7 @@ Currently, I have many ideas about this app but  my ideas are bottlenecked by my
 
 I intend to create a MVP with barebones features and use / improve it personally. 
 
-My ultimate hope for this app is that this can turn to become some social good for Singaporeans and this app eventually break-evens after scaling with its server / API costs supported through light-forms of advertisements or monetisation strategy.
+My ultimate hope for this app is that this can turn to become some social good for Singaporeans and this app eventually break-evens after scaling with its server / storage costs supported through light-forms of advertisements or monetisation strategy.
 
 As mentioned, there are still so many things to build if I can. React native development would definitely be next in mind, deploying to Android and iOS devices (Apple Developer Plan to deploy the app is alr $99/year lol) as no one person would like to use a browser while on a phone. Also, many other ideas such as finding "healthy meals", creating "wallet feature" for a two-pronged contributing of price data and also tracking of one's personal expenses, social media feature, PoS and ordering through app (does not have to be delivery, can be just dine-in / takeaway) support for food owners, etc.
 

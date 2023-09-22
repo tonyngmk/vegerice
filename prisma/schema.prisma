@@ -14,12 +14,14 @@ datasource db {
 // Next-Auth required models
 model User {
     // Fundamentally, 1 person maps to 1 user.
-    user_id       String    @id @default(cuid())
-    user_name     String
-    user_email    String   @unique
-    user_verified DateTime?
-    accounts      Account[]
-    shops         Shop[]
+    user_id          String    @id @default(cuid())
+    user_name        String
+    user_email       String   @unique
+    user_verified    DateTime?
+    create_datetime  DateTime @default(now())
+    accounts         Account[]
+    markets          Market[]
+    shops            Shop[]
 
     @@unique([user_id])
     @@index([user_id])
@@ -32,6 +34,7 @@ model Account {
     type                String
     account_provider    String
     account_provider_id String
+    create_datetime     DateTime @default(now())
     refresh_token       String? // @db.Text
     access_token        String? // @db.Text
     expires_at          Int?
@@ -48,21 +51,24 @@ model Account {
 
 model Session {
     // An account can have multiple sessions, i.e. A user's Google account has 2 sessions, and Facebook account has 1 session today.
-    session_id    String   @id @default(cuid())
-    sessionToken  String   @unique
-    user_id       String
-    account_id    String
-    expires       DateTime
-    account       Account  @relation(fields: [user_id, account_id], references: [user_id, account_id], onDelete: Cascade)
+    session_id       String   @id @default(cuid())
+    sessionToken     String   @unique
+    user_id          String
+    account_id       String
+    expires          DateTime
+    create_datetime  DateTime @default(now())
+    account          Account  @relation(fields: [user_id, account_id], references: [user_id, account_id], onDelete: Cascade)
     
     @@unique([session_id])
     @@index([session_id])
 }
 
 model VerificationToken {
-    identifier String
-    token      String   @unique
-    expires    DateTime
+    identifier       String
+    token            String   @unique
+    expires          DateTime
+    create_datetime  DateTime @default(now())
+
 
     @@unique([identifier, token])
 }
@@ -72,14 +78,20 @@ model Market {
     // A market is synonymous with a place where people eat, i.e. a hawker centre / food court / eatery / food street, etc.
     market_id            String    @id @default(cuid())
     market_name          String
+    create_datetime      DateTime  @default(now())
+    user_id              String?
     market_email         String?   @unique
     market_image         String?
     market_block_house   String?
     market_street_name   String?
     market_unit_no       Int?
     market_postal_code   Int?
-    market_coordinates     String?
-    shops         Shop[]
+    market_coordinates   String?
+    market_category_l1   String // NSEW, Central
+    market_category_l2   String? // Town
+
+    user                 User?    @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
+    shops                Shop[]
 
     @@index([market_id])
 }
@@ -88,9 +100,10 @@ model Shop {
     // A market can have 1 or multiple shops, i.e. 1 selling rice, another selling noodles, etc.
     // For rare standalone food shops, a 'Market' can be optional too.
     shop_id            String    @id @default(cuid())
-    user_id            String
+    user_id            String?
     market_id          String?
     shop_name          String
+    create_datetime    DateTime  @default(now())
     shop_email         String?   @unique
     shop_image         String?
     shop_block_house   String?
@@ -100,13 +113,13 @@ model Shop {
     shop_description   String?
     shop_category_l1   String
     shop_category_l2   String?
-    shop_coordinates     String?
+    shop_coordinates   String?
     is_halal           Boolean?
-    user               User    @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
-    market             Market?  @relation(fields: [market_id], references: [market_id], onDelete: Cascade)
+    user               User?     @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
+    market             Market?   @relation(fields: [market_id], references: [market_id], onDelete: Cascade)
     shop_items         ShopItem[]
 
-    @@unique([user_id, shop_id])
+    @@unique([shop_id])
     @@index([shop_id])
 }
 
@@ -120,7 +133,8 @@ model ShopItem {
     item_description String?
     item_image       String?
     item_price       Float?
-    shop             Shop    @relation(fields: [shop_id], references: [shop_id], onDelete: Cascade)
+    create_datetime  DateTime  @default(now())
+    shop             Shop      @relation(fields: [shop_id], references: [shop_id], onDelete: Cascade)
 
     @@unique([item_id])
     @@index([item_id])
