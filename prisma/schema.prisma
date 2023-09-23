@@ -84,16 +84,20 @@ model Market {
     market_image         String?
     market_block_house   String?
     market_street_name   String?
+    market_building_name String?
     market_unit_no       Int?
-    market_postal_code   Int?
+    market_postal_code   String?
+    market_description   String?
+    market_status        String?
     market_coordinates   String?
-    market_category_l1   String // NSEW, Central
-    market_category_l2   String? // Town
+    market_category_l1   String // District
+    market_category_l2   String? // Planning Area
 
     user                 User?    @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
     shops                Shop[]
 
     @@index([market_id])
+    @@unique([market_id, market_name])
 }
 
 model Shop {
@@ -108,8 +112,9 @@ model Shop {
     shop_image         String?
     shop_block_house   String?
     shop_street_name   String?
-    shop_unit_no       Int?
-    shop_postal_code   Int?
+    shop_floor_no      String?
+    shop_unit_no       String?
+    shop_postal_code   String?
     shop_description   String?
     shop_category_l1   String
     shop_category_l2   String?
@@ -119,7 +124,7 @@ model Shop {
     market             Market?   @relation(fields: [market_id], references: [market_id], onDelete: Cascade)
     shop_items         ShopItem[]
 
-    @@unique([shop_id])
+    @@unique([shop_id, user_id])
     @@index([shop_id])
 }
 
@@ -136,6 +141,6 @@ model ShopItem {
     create_datetime  DateTime  @default(now())
     shop             Shop      @relation(fields: [shop_id], references: [shop_id], onDelete: Cascade)
 
-    @@unique([item_id])
+    @@unique([item_id, shop_id])
     @@index([item_id])
 }
