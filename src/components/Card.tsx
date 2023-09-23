@@ -1,20 +1,20 @@
 
 import React from 'react';
 
-interface ShopCardProps {
+interface CardProps {
   title: string;
   content: string;
 }
 
-const ShopCard: React.FC<ShopCardProps> = ({ title, content }) => {
+const Card: React.FC<CardProps> = ({ title, content }) => {
   return (
     <div className="bg-white shadow-md rounded-lg overflow-hidden">
-      {/* ShopCard Header */}
+      {/* Card Header */}
       <div className="bg-gray-200 px-4 py-2">
         <h3 className="text-lg font-semibold text-gray-800">{title}</h3>
       </div>
 
-      {/* ShopCard Content */}
+      {/* Card Content */}
       <div className="p-4">
         <p className="text-gray-600">{content}</p>
       </div>
@@ -23,4 +23,4 @@ const ShopCard: React.FC<ShopCardProps> = ({ title, content }) => {
   );
 };
 
-export default ShopCard;
+export default Card;

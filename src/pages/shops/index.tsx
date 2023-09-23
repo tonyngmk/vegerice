@@ -1,5 +1,5 @@
 import { api } from "~/utils/api";
-import ShopCard from "~/components/ShopCard";
+import Card from "~/components/Card";
 
 export default function Shops() {
     
@@ -11,6 +11,12 @@ export default function Shops() {
       console.log('Button clicked');
     };
 
+    function joinStringsWithSpace(strings: (string | null)[]): string {
+      // Filter out null values and join with space
+      const filteredStrings = strings.filter((str) => str !== null);
+      return filteredStrings.join(' ');
+    }
+
     return (
       <>
         <div className="flex flex-col justify-center items-center min-h-full">
@@ -19,10 +25,15 @@ export default function Shops() {
 
             <div className="flex flex-row ">
               <div className="flex flex-col">
-                {market_data?.map((market)=><ShopCard
+                {market_data?.map((market)=><Card
                   key={market.market_id}
                   title={market.market_name}
-                  content={market.market_building_name ?? ""}
+                  content={joinStringsWithSpace([
+                      market.market_block_house,
+                      market.market_street_name,
+                      market.market_building_name,
+                      market.market_postal_code
+                  ])}
                 />)}
               </div>
 
